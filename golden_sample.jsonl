@@ -1,0 +1,8 @@
+{"question": "How do I post a manual journal?", "reference": "Open Journals, select New Journal, enter date and narrative, add balancing lines, validate, then post.", "category": "clear_factual"}
+{"question": "What happens if my journal does not balance?", "reference": "Validation fails and the journal cannot be posted until debits equal credits.", "category": "clear_factual"}
+{"question": "How do I correct a posted journal?", "reference": "Create a reversing journal that references the original journal number.", "category": "clear_factual"}
+{"question": "What depreciation profiles are available for fixed assets?", "reference": "Straight line over 3, 5, or 10 years, and reducing balance at 25 percent.", "category": "clear_factual"}
+{"question": "How do I upload a budget?", "reference": "Open Planning, Budgets, Upload; choose scenario and CSV; validate; confirm.", "category": "clear_factual"}
+{"question": "How do I configure the payroll integration?", "reference": "Not covered in the documentation.", "category": "out_of_scope"}
+{"question": "What is the best depreciation strategy for my company?", "reference": "Ambiguous: depends on company circumstances not covered in the documentation.", "category": "ambiguous_broad"}
+{"question": "Tell me everything about the system", "reference": "Too broad to answer from documentation.", "category": "ambiguous_broad"}
