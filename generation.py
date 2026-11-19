@@ -1,5 +1,9 @@
 """Grounded generation with strict citation and explicit refusal."""
+
+from __future__ import annotations
+
 import anthropic
+
 from config import ANTHROPIC_API_KEY
 from retrieval import Chunk
 
@@ -13,20 +17,27 @@ Rules:
 
 REFUSAL_PREFIX = "REFUSAL:"
 
+_client: anthropic.Anthropic | None = None
+
+
+def _get_client() -> anthropic.Anthropic:
+    global _client
+    if _client is None:
+        _client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    return _client
+
 
 def is_refusal(text: str) -> bool:
     return text.strip().upper().startswith(REFUSAL_PREFIX)
 
 
 def build_prompt(query: str, chunks: list[Chunk]) -> str:
-    context = "\n\n".join(
-        f"[Source: {c.source}]\n{c.content}" for c in chunks
-    )
+    context = "\n\n".join(f"[Source: {c.source}]\n{c.content}" for c in chunks)
     return f"Context:\n{context}\n\nQuestion: {query}"
 
 
 def answer(query: str, chunks: list[Chunk], model: str = "claude-sonnet-4-5") -> str:
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = _get_client()
     msg = client.messages.create(
         model=model,
         max_tokens=1024,

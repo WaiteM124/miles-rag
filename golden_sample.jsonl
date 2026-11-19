@@ -6,3 +6,30 @@
 {"question": "How do I configure the payroll integration?", "reference": "Not covered in the documentation.", "category": "out_of_scope"}
 {"question": "What is the best depreciation strategy for my company?", "reference": "Ambiguous: depends on company circumstances not covered in the documentation.", "category": "ambiguous_broad"}
 {"question": "Tell me everything about the system", "reference": "Too broad to answer from documentation.", "category": "ambiguous_broad"}
+{"question": "What is the minimum narrative length for a journal?", "reference": "The journal narrative must be at least 20 characters.", "category": "clear_factual"}
+{"question": "Can I edit a posted journal?", "reference": "No, posted journals cannot be edited. Corrections require a reversing journal.", "category": "clear_factual"}
+{"question": "What fields are required on each journal line?", "reference": "Each line requires an account code, a description, and either a debit or credit amount.", "category": "clear_factual"}
+{"question": "How do I register a new fixed asset?", "reference": "Open Assets, select New Asset, enter asset code, description, purchase date, cost, select depreciation profile, then Register.", "category": "clear_factual"}
+{"question": "What fields are required when registering an asset?", "reference": "Asset code, purchase date, cost, and depreciation profile.", "category": "clear_factual"}
+{"question": "When does depreciation begin for a new asset?", "reference": "Depreciation begins on the next monthly run after registration.", "category": "clear_factual"}
+{"question": "How are asset disposals recorded?", "reference": "Disposals are recorded from the asset record with disposal proceeds and date.", "category": "clear_factual"}
+{"question": "What happens to gain or loss on disposal?", "reference": "Gain or loss on disposal posts automatically to the profit and loss account.", "category": "clear_factual"}
+{"question": "What is the format for budget CSV files?", "reference": "Three columns: account code, period (YYYY-MM), and amount. Amounts are signed.", "category": "clear_factual"}
+{"question": "What budget scenarios are available?", "reference": "Base, Stretch, or Forecast.", "category": "clear_factual"}
+{"question": "What happens to invalid rows in a budget upload?", "reference": "Invalid rows are rejected with a row-level report.", "category": "clear_factual"}
+{"question": "How can I compare budget versions?", "reference": "Use the Variance view to show the delta between any two versions by account and period.", "category": "clear_factual"}
+{"question": "Are earlier budget versions retained?", "reference": "Yes, each upload creates a new version and earlier versions are retained for audit.", "category": "clear_factual"}
+{"question": "What does the system validate when uploading a budget?", "reference": "Every account code and period before committing.", "category": "clear_factual"}
+{"question": "How do negative amounts work in budget uploads?", "reference": "Negative values reduce budget.", "category": "clear_factual"}
+{"question": "Where do I create a reversing journal?", "reference": "Create a new journal, select the Reverse option, and reference the original journal number.", "category": "clear_factual"}
+{"question": "What date is used for a reversal?", "reference": "The reversal posts on the date you specify.", "category": "clear_factual"}
+{"question": "What straight line depreciation periods are available?", "reference": "3, 5, or 10 years.", "category": "clear_factual"}
+{"question": "What is the reducing balance depreciation rate?", "reference": "25 percent.", "category": "clear_factual"}
+{"question": "How is the first depreciation charge calculated?", "reference": "From the purchase date when the depreciation profile is selected.", "category": "clear_factual"}
+{"question": "What validation checks run before posting a journal?", "reference": "The system checks that the journal balances and that all account codes are active.", "category": "clear_factual"}
+{"question": "How do I connect to Salesforce?", "reference": "Not covered in the documentation.", "category": "out_of_scope"}
+{"question": "What APIs does the system expose?", "reference": "Not covered in the documentation.", "category": "out_of_scope"}
+{"question": "How do I set up multi-currency?", "reference": "Not covered in the documentation.", "category": "out_of_scope"}
+{"question": "Should I use straight line or reducing balance depreciation?", "reference": "Ambiguous: depends on company circumstances not covered in the documentation.", "category": "ambiguous_broad"}
+{"question": "What are the best practices for journal entry?", "reference": "Too broad to answer precisely from documentation.", "category": "ambiguous_broad"}
+{"question": "How do I improve my budgeting process?", "reference": "Too broad to answer precisely from documentation.", "category": "ambiguous_broad"}
