@@ -1,6 +1,6 @@
 # Miles RAG PoC
 
-[![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/ci.yml)
+[![CI](https://github.com/WaiteM124/miles-rag/actions/workflows/ci.yml/badge.svg)](https://github.com/WaiteM124/miles-rag/actions/workflows/ci.yml)
 
 A proof-of-concept retrieval-augmented generation (RAG) assistant demonstrating hybrid search, grounded generation, and evaluation-driven development. Built as a learning project and portfolio piece.
 
