@@ -1,0 +1,432 @@
+{
+  "metrics": {
+    "hit_rate_at_8": 1.0,
+    "mrr": 1.0,
+    "top_k": 8,
+    "total_questions": 35,
+    "answerable_questions": 26,
+    "hits": 26
+  },
+  "per_question": [
+    {
+      "question": "How do I post a manual journal?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md"
+      ]
+    },
+    {
+      "question": "What happens if my journal does not balance?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "How do I correct a posted journal?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "What depreciation profiles are available for fixed assets?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "How do I upload a budget?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "How do I configure the payroll integration?",
+      "category": "out_of_scope",
+      "num_chunks": 3,
+      "hit": null,
+      "first_relevant_rank": null,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md"
+      ]
+    },
+    {
+      "question": "What is the best depreciation strategy for my company?",
+      "category": "ambiguous_broad",
+      "num_chunks": 3,
+      "hit": null,
+      "first_relevant_rank": null,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "Tell me everything about the system",
+      "category": "ambiguous_broad",
+      "num_chunks": 3,
+      "hit": null,
+      "first_relevant_rank": null,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "What is the minimum narrative length for a journal?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md"
+      ]
+    },
+    {
+      "question": "Can I edit a posted journal?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md"
+      ]
+    },
+    {
+      "question": "What fields are required on each journal line?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md"
+      ]
+    },
+    {
+      "question": "How do I register a new fixed asset?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "What fields are required when registering an asset?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "When does depreciation begin for a new asset?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "How are asset disposals recorded?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "What happens to gain or loss on disposal?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "What is the format for budget CSV files?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "What budget scenarios are available?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "What happens to invalid rows in a budget upload?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/journals.md",
+        "data/docs/erp/fixed-assets.md"
+      ]
+    },
+    {
+      "question": "How can I compare budget versions?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "Are earlier budget versions retained?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "What does the system validate when uploading a budget?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "How do negative amounts work in budget uploads?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "Where do I create a reversing journal?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "What date is used for a reversal?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "What straight line depreciation periods are available?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "What is the reducing balance depreciation rate?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "How is the first depreciation charge calculated?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "What validation checks run before posting a journal?",
+      "category": "clear_factual",
+      "num_chunks": 3,
+      "hit": true,
+      "first_relevant_rank": 1,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md"
+      ]
+    },
+    {
+      "question": "How do I connect to Salesforce?",
+      "category": "out_of_scope",
+      "num_chunks": 3,
+      "hit": null,
+      "first_relevant_rank": null,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md"
+      ]
+    },
+    {
+      "question": "What APIs does the system expose?",
+      "category": "out_of_scope",
+      "num_chunks": 3,
+      "hit": null,
+      "first_relevant_rank": null,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "How do I set up multi-currency?",
+      "category": "out_of_scope",
+      "num_chunks": 3,
+      "hit": null,
+      "first_relevant_rank": null,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "Should I use straight line or reducing balance depreciation?",
+      "category": "ambiguous_broad",
+      "num_chunks": 3,
+      "hit": null,
+      "first_relevant_rank": null,
+      "top_sources": [
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/journals.md"
+      ]
+    },
+    {
+      "question": "What are the best practices for journal entry?",
+      "category": "ambiguous_broad",
+      "num_chunks": 3,
+      "hit": null,
+      "first_relevant_rank": null,
+      "top_sources": [
+        "data/docs/erp/journals.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/fpna/budgeting.md"
+      ]
+    },
+    {
+      "question": "How do I improve my budgeting process?",
+      "category": "ambiguous_broad",
+      "num_chunks": 3,
+      "hit": null,
+      "first_relevant_rank": null,
+      "top_sources": [
+        "data/docs/fpna/budgeting.md",
+        "data/docs/erp/fixed-assets.md",
+        "data/docs/erp/journals.md"
+      ]
+    }
+  ]
+}
