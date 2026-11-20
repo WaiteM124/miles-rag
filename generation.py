@@ -1,6 +1,8 @@
-"""Grounded generation with strict citation and explicit refusal."""
+"""Grounded generation with strict citation, explicit refusal, and streaming support."""
 
 from __future__ import annotations
+
+from collections.abc import Iterator
 
 import anthropic
 
@@ -16,6 +18,14 @@ Rules:
 """
 
 REFUSAL_PREFIX = "REFUSAL:"
+
+# Returned verbatim when the retriever finds no chunks above the similarity
+# threshold.  Starts with REFUSAL: so is_refusal() catches it automatically.
+NO_CONTEXT_RESPONSE = (
+    "REFUSAL: NO RELEVANT CONTEXT FOUND — the query did not match any document "
+    "chunks above the minimum similarity threshold. Please rephrase your question "
+    "or verify that the relevant documents have been ingested."
+)
 
 _client: anthropic.Anthropic | None = None
 
@@ -37,6 +47,15 @@ def build_prompt(query: str, chunks: list[Chunk]) -> str:
 
 
 def answer(query: str, chunks: list[Chunk], model: str = "claude-sonnet-4-5") -> str:
+    """Generate a grounded answer.
+
+    Returns ``NO_CONTEXT_RESPONSE`` immediately (without calling the LLM) when
+    *chunks* is empty — this is the structured failure-mode response emitted
+    when no retrieved chunks cleared the similarity threshold.
+    """
+    if not chunks:
+        return NO_CONTEXT_RESPONSE
+
     client = _get_client()
     msg = client.messages.create(
         model=model,
@@ -45,3 +64,33 @@ def answer(query: str, chunks: list[Chunk], model: str = "claude-sonnet-4-5") ->
         messages=[{"role": "user", "content": build_prompt(query, chunks)}],
     )
     return msg.content[0].text
+
+
+def answer_stream(
+    query: str, chunks: list[Chunk], model: str = "claude-sonnet-4-5"
+) -> Iterator[str]:
+    """Stream the answer token-by-token using the Anthropic streaming API.
+
+    Yields string tokens as they arrive from the model.  When *chunks* is
+    empty the full ``NO_CONTEXT_RESPONSE`` string is yielded in a single
+    iteration without making any API call.
+
+    Example usage::
+
+        for token in answer_stream(query, chunks):
+            sys.stdout.write(token)
+            sys.stdout.flush()
+        print()  # final newline
+    """
+    if not chunks:
+        yield NO_CONTEXT_RESPONSE
+        return
+
+    client = _get_client()
+    with client.messages.stream(
+        model=model,
+        max_tokens=1024,
+        system=SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": build_prompt(query, chunks)}],
+    ) as stream:
+        yield from stream.text_stream

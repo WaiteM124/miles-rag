@@ -6,12 +6,14 @@ import hashlib
 import os
 import time
 from collections import OrderedDict
+from collections.abc import Iterator
 from typing import Any
 
 from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from generation import answer, is_refusal
+from generation import answer, answer_stream, is_refusal
 from retrieval import Chunk, HybridRetriever
 
 app = FastAPI(title="miles-rag")
@@ -96,6 +98,11 @@ def clear_cache(_: str = Depends(verify_admin_token)) -> dict[str, int]:
 
 @app.post("/query", response_model=Answer)
 def query(q: Query) -> Answer:
+    """Retrieve-then-generate with LRU caching.
+
+    Returns a structured refusal (``refusal=True``) when no retrieved chunks
+    clear the similarity threshold — the LLM is never called in that case.
+    """
     key = hashlib.sha256(q.question.encode()).hexdigest()
     cached = _cache.get(key)
     if cached is not None:
@@ -111,3 +118,29 @@ def query(q: Query) -> Answer:
     sources = [Source(content=c.content, source=c.source) for c in chunks]
     _cache.set(key, (text, [s.model_dump() for s in sources]))
     return Answer(answer=text, refusal=is_refusal(text), sources=sources)
+
+
+@app.post("/query/stream")
+def query_stream(q: Query) -> StreamingResponse:
+    """Stream the answer token-by-token.
+
+    Tokens arrive via ``text/plain`` chunked transfer encoding.  The streaming
+    endpoint bypasses the LRU cache (each call hits the retriever and LLM
+    directly) and therefore always returns a fresh response.
+
+    When no chunks clear the similarity threshold the full refusal string is
+    returned as a single chunk without calling the LLM.
+
+    Example (curl)::
+
+        curl -X POST http://localhost:8000/query/stream \\
+          -H "Content-Type: application/json" \\
+          -d '{"question": "How do I post a manual journal?"}' \\
+          --no-buffer
+    """
+    chunks: list[Chunk] = retriever.search(q.question)
+
+    def token_gen() -> Iterator[str]:
+        yield from answer_stream(q.question, chunks)
+
+    return StreamingResponse(token_gen(), media_type="text/plain; charset=utf-8")

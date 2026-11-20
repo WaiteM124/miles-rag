@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
-"""One-command demo: ingests sample corpus and runs sample queries.
+"""One-command demo: ingests sample corpus and runs sample queries with streaming output.
 
 Uses in-memory Qdrant by default (no Docker required).
 Set QDRANT_URL environment variable to use an external Qdrant instance.
+
+The demo showcases all five pipeline improvements:
+  1. Hybrid retrieval (BM25 + dense + RRF + cross-encoder re-rank)
+  2. Failure-mode refusal when no context is found
+  3. Streaming token-by-token output
+  4. Observable retrieval logs written to stderr
+  5. Eval harness available separately via: python eval.py
 """
 
 from __future__ import annotations
 
+import logging
 import os
 import sys
 
@@ -14,10 +22,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# ── Observability: emit retrieval logs to stderr ──────────────────────────────
+logging.basicConfig(
+    level=logging.INFO,
+    stream=sys.stderr,
+    format="%(asctime)s [%(name)s] %(message)s",
+    datefmt="%H:%M:%S",
+)
+
 SAMPLE_QUESTIONS = [
     "How do I post a manual journal?",
     "What depreciation profiles are available for fixed assets?",
     "How do I upload a budget?",
+    # This question intentionally has no matching context — demonstrates the
+    # structured refusal failure-mode response instead of hallucination.
+    "How do I configure the Salesforce integration?",
 ]
 
 
@@ -47,7 +66,7 @@ def main() -> int:
     from sentence_transformers import SentenceTransformer
 
     from config import EMBEDDING_MODEL, QDRANT_URL
-    from generation import answer
+    from generation import answer_stream
     from ingestion import ingest
     from retrieval import HybridRetriever
 
@@ -66,11 +85,11 @@ def main() -> int:
     n = ingest(client=client, embedder=embedder)
     print(f"Ingested {n} chunks from data/docs/")
 
-    print("\nInitializing hybrid retriever...")
+    print("\nInitializing hybrid retriever (lazy-loads cross-encoder on first query)...")
     retriever = HybridRetriever(qdrant_client=client)
 
     print("\n" + "=" * 60)
-    print("SAMPLE QUERIES")
+    print("SAMPLE QUERIES  (retrieval logs → stderr, answer → stdout)")
     print("=" * 60)
 
     for i, question in enumerate(SAMPLE_QUESTIONS, 1):
@@ -79,29 +98,41 @@ def main() -> int:
         print()
 
         chunks = retriever.search(question)
+
         if not chunks:
-            print("No relevant documents found.")
-            continue
+            print("⚠  No chunks cleared the similarity threshold.")
+            print("   Pipeline returns a structured refusal without calling the LLM.")
+            print()
 
-        print(f"Retrieved {len(chunks)} chunks from:")
-        for c in chunks[:3]:
-            print(f"  - {c.source} (score: {c.score:.4f})")
-
-        print()
+        print("A (streaming): ", end="", flush=True)
         try:
-            response = answer(question, chunks)
-            print(f"A: {response}")
+            for token in answer_stream(question, chunks):
+                sys.stdout.write(token)
+                sys.stdout.flush()
+            print()  # final newline after streamed tokens
         except Exception as e:
-            print(f"Error generating answer: {e}")
+            print(f"\nError generating answer: {e}")
+
+        if chunks:
+            print()
+            print(f"  Retrieved {len(chunks)} chunks (re-ranked by cross-encoder):")
+            for c in chunks[:3]:
+                reranker_info = (
+                    f"reranker={c.reranker_score:.2f}" if c.reranker_score is not None else ""
+                )
+                print(f"    · {c.source}  rrf={c.score:.4f}  {reranker_info}")
         print()
 
     print("=" * 60)
     print("Demo complete!")
     print()
-    print("To run the full API server:")
-    print("  1. Start Qdrant: docker compose up -d")
-    print("  2. Ingest docs:  python ingestion.py")
-    print("  3. Start API:    uvicorn main:app --reload")
+    print("Other entry points:")
+    print("  Offline eval:   python eval.py")
+    print("  Retrieval eval: python eval_retrieval.py")
+    print("  API server:     uvicorn main:app --reload")
+    print("  Streaming curl: curl -X POST http://localhost:8000/query/stream \\")
+    print('                    -H "Content-Type: application/json" \\')
+    print('                    -d \'{"question": "How do I post a journal?"}\' --no-buffer')
     print("=" * 60)
     return 0
 
