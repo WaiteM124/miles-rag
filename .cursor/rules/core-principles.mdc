@@ -1,0 +1,15 @@
+---
+description: Non-negotiable Miles RAG product and contribution principles
+alwaysApply: true
+---
+
+# Miles RAG core principles
+
+Canonical detail: `AGENTS.md`.
+
+- **Grounded answers only.** Answer from retrieved context; use explicit `REFUSAL:` when missing, ambiguous, or out of scope. Never invent identifiers, amounts, or steps.
+- **Fail closed on weak retrieval.** Below `MIN_SCORE_THRESHOLD` → empty chunks and structured refusal; do not call the LLM with empty/irrelevant context.
+- **Hybrid retrieval stays measurable.** Keep BM25 + dense + RRF + threshold + cross-encoder observable; measure before changing fusion/threshold defaults.
+- **Evaluate before trusting LLM output.** Use offline eval / RAGAS / judges; do not invent undocumented metric numbers.
+- **Do not weaken tests** to green CI. Keep PRs small and scoped. No secrets in the repo.
+- Prefer matching existing patterns. State assumptions in the PR. When rules conflict, `AGENTS.md` wins.

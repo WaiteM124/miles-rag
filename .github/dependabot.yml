@@ -1,0 +1,22 @@
+# Dependabot: keep pip deps and GitHub Actions up to date.
+# Review PRs carefully — pin bumps for models/embeddings are product decisions
+# (see AGENTS.md). Prefer small, reviewed bumps over silent major upgrades.
+
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
