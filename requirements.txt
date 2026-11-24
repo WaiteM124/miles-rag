@@ -1,7 +1,7 @@
 # Core dependencies (pinned for reproducibility)
 fastapi==0.115.6
 uvicorn[standard]==0.32.1
-qdrant-client==1.12.1
+qdrant-client==1.20.0
 # sentence-transformers provides both SentenceTransformer (dense embeddings)
 # and CrossEncoder (cross-encoder/ms-marco-MiniLM-L-6-v2 re-ranker).
 sentence-transformers==3.3.1
