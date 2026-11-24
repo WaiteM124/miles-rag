@@ -89,7 +89,7 @@ jobs:
         run: python eval_retrieval.py --output results/retrieval_metrics.json
 
       - name: Upload retrieval metrics
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: retrieval-metrics
           path: results/retrieval_metrics.json
