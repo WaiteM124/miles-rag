@@ -1,0 +1,16 @@
+---
+description: Python engineering standards for Miles RAG modules and tests
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python standards
+
+Canonical detail: `AGENTS.md`.
+
+- Target **Python 3.11+** (CI: 3.12). Type hints on public APIs; **Pydantic v2** models at FastAPI request/response boundaries.
+- Keep modules flat and focused (`config`, `ingestion`, `retrieval`, `generation`, `main`, eval scripts). Prefer injecting Qdrant/embedder clients where helpers already accept them.
+- Logging: standard `logging` with structured field-like messages (`stage=`, `latency_ms=`, scores, IDs). Never log secrets or API keys.
+- Tests are the spec: known-answer cases for RRF, chunk IDs, refusal detection, chunking. Keep `tests/` offline/mocked for default CI.
+- Before finishing: `ruff check .` (pinned `ruff==0.8.2`) and `pytest tests/`. For retrieval-path changes, also run `python eval_retrieval.py` when feasible.
+- Do not mass-reformat unrelated files. Do not bump dependency or model versions unless the task asks for it.

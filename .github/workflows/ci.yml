@@ -1,3 +1,20 @@
+# Lint, unit tests, and offline retrieval eval-gate for Miles RAG.
+#
+# Assumptions:
+# - Python 3.12 (requires-python >=3.11 in pyproject.toml).
+# - ruff is pinned in requirements.txt as ruff==0.8.2 and configured in
+#   pyproject.toml. Installed via requirements for an explicit lint toolchain.
+# - Default PR/push job runs unit tests only (mocked; no live Qdrant/LLM).
+# - Offline eval (eval_retrieval.py) is deterministic but not cheap: it
+#   downloads embedding + cross-encoder weights. It therefore runs on
+#   schedule + workflow_dispatch, not on every PR. Make this job a required
+#   check for retrieval-affecting releases, or run it manually before merge.
+# - LLM/RAGAS paths need ANTHROPIC_API_KEY and a running API — not in CI.
+# - This workflow does not deploy and does not use repository secrets.
+# - ruff format --check currently passes; if it starts failing on existing
+#   code, prefer configuring ignores / dropping format --check over mass
+#   reformatting application sources (docs/config-only policy).
+
 name: CI
 
 on:
@@ -5,9 +22,14 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    # Weekly offline retrieval gate (Sunday 06:00 UTC)
+    - cron: "0 6 * * 0"
+  workflow_dispatch:
 
 jobs:
   lint-and-test:
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
@@ -26,8 +48,48 @@ jobs:
 
       - name: Lint with ruff
         run: |
+          ruff --version
           ruff check .
           ruff format --check .
 
-      - name: Run tests
+      - name: Run unit tests
         run: pytest tests/ -v
+
+  eval-gate:
+    # Offline retrieval metrics: deterministic, no API key, but model download
+    # makes this unsuitable for every PR. Scheduled + manual only.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Cache Hugging Face / sentence-transformers models
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            ~/.cache/torch
+          key: ${{ runner.os }}-hf-st-${{ hashFiles('requirements.txt', 'config.py') }}
+          restore-keys: |
+            ${{ runner.os }}-hf-st-
+
+      - name: Offline retrieval eval
+        run: python eval_retrieval.py --output results/retrieval_metrics.json
+
+      - name: Upload retrieval metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: retrieval-metrics
+          path: results/retrieval_metrics.json
