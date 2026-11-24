@@ -76,7 +76,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Cache Hugging Face / sentence-transformers models
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.cache/huggingface
